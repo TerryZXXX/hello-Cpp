@@ -1,0 +1,15 @@
+services:
+  hello-cpp:
+    build:
+      context: .
+      dockerfile: dockerfiles/Dockerfile
+    image: hello-cpp-ubuntu-dev:latest  # 构建后镜像的名称和标签
+    environment:
+      USER: root
+    volumes:
+      - "~/.ssh:/root/.ssh:ro" # 挂载宿主机的ssh配置文件，方便推拉代码（只读）
+      - "/etc/localtime:/etc/localtime:ro" # 挂载宿主机时间到容器
+      - .:/root/hello-cpp # 项目代码
+    working_dir: /root/hello-cpp
+    # sleep infinity 用于保持容器运行
+    command: ["sleep", 'infinity']
